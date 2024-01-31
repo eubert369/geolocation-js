@@ -2,7 +2,7 @@ const successCallback = (position) => {
     console.log(position);
     document.getElementById('lat').textContent = 'Latitude: ' + position.coords.latitude;
     document.getElementById('long').textContent = 'Longitude: ' + position.coords.longitude;
-    document.getElementById('acc').textContent = 'Accuracy: ' + position.coords.longitude;
+    document.getElementById('acc').textContent = 'Accuracy: ' + position.coords.accuracy;
 };
 
 const errorCallback = (error) => {
