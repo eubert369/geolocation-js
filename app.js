@@ -1,7 +1,7 @@
-document.getElementById('range').addEventListener('change', () => {
-    document.getElementById('num').textContent = document.getElementById('range').value;
-    console.log(document.getElementById('range').value);
-})
+// document.getElementById('range').addEventListener('change', () => {
+//     document.getElementById('num').textContent = document.getElementById('range').value;
+//     console.log(document.getElementById('range').value);
+// })
 
 // var myAPIKey = "ebe23a3f33c441faa7078ef5c1eb0cda";
 
@@ -86,7 +86,7 @@ const successCallback = (position) => {
 
     // Calculate the distance between the current location and the provided coordinates
     distance = calculateDistance(currentLat, currentLon, providedLat, providedLon);
-
+    document.getElementById('num').textContent = distance + ' km'
     // Check if the distance is within the specified proximity
     if (distance <= proximity) {
         console.log(distance + 'Km: The provided coordinates are within the specified proximity of the current location.');
@@ -104,8 +104,25 @@ const options = {
     timeout: 10000,
 };
 
-navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
+// navigator.geolocation.getCurrentPosition(successCallback, errorCallback, options);
 // navigator.geolocation.watchPosition(successCallback, errorCallback);
+const currentLat = 11.240029883135003;
+const currentLon = 125.00268827609003;
+
+// Provided coordinates
+const providedLat = 11.238277945581412;
+const providedLon = 125.00150250628963;
+
+// Specified proximity in kilometers
+const proximity = 5; // 10 kilometers
+
+// Calculate the distance between the current location and the provided coordinates
+distance = calculateDistance(currentLat, currentLon, providedLat, providedLon);
+document.getElementById('num').textContent = 'Range: ' + distance + ' km'
+
+
+
+
 
 function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // Radius of the Earth in kilometers
