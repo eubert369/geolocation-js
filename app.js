@@ -1,3 +1,7 @@
+document.getElementById('range').addEventListener('change', () => {
+    document.getElementById('num').textContent = document.getElementById('range').value;
+    console.log(document.getElementById('range').value);
+})
 
 // var myAPIKey = "ebe23a3f33c441faa7078ef5c1eb0cda";
 
@@ -85,9 +89,9 @@ const successCallback = (position) => {
 
     // Check if the distance is within the specified proximity
     if (distance <= proximity) {
-        console.log('The provided coordinates are within the specified proximity of the current location.');
+        console.log(distance + 'Km: The provided coordinates are within the specified proximity of the current location.');
     } else {
-        console.log('The provided coordinates are not within the specified proximity of the current location.');
+        console.log(distance + 'Km: The provided coordinates are not within the specified proximity of the current location.');
     }
 };
 
