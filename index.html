@@ -45,30 +45,30 @@
 
 <!-- google maps API -->
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 
-<head>
-    <title>Simple Marker</title>
-    <!-- The callback parameter is required, so we use console.debug as a noop -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+<head> -->
+<!-- <title>Simple Marker</title> -->
+<!-- The callback parameter is required, so we use console.debug as a noop -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDYtN3BNCcHFJXpQXrNMxKxIsc9-Pdd-0&callback=console.debug&libraries=maps,marker&v=beta">
-        </script>
-    <!-- <script async
+        </script> -->
+<!-- <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDYtN3BNCcHFJXpQXrNMxKxIsc9-Pdd-0&callback=initMap&libraries=maps,marker&v=beta">
         </script> -->
-    <style>
+<!-- <style>
         /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-        gmp-map {
+        /* gmp-map {
             height: 70%;
             width: 50%;
-        }
+        } */
 
         /* Optional: Makes the sample page fill the window. */
-        html,
+        /* html,
         body {
             height: 100%;
             margin: 0;
@@ -78,22 +78,78 @@
         #map {
             height: 400px;
             width: 100%;
-        }
-    </style>
-</head>
+        } */
+    </style> -->
+<!-- </head> -->
 <!-- 11.240186748500088, 125.00284663358609 -->
 
-<body>
+<!-- <body>
     <gmp-map class="mx-auto container" center="11.240029883135003, 125.00268827609003" zoom="16" map-id="DEMO_MAP_ID">
         <gmp-advanced-marker position="11.238277945581412, 125.00150250628963" title="Second location"></gmp-advanced-marker>
         <gmp-advanced-marker id="current-location" position="11.240029883135003, 125.00268827609003" title="First location">            
             <img id="current-location-img" class="rounded-circle border border-danger" src="inay-profile.jpg" style="width: 40px; height: 40px;" alt="Custom Marker Icon">
         </gmp-advanced-marker>
-    </gmp-map>
-    <!-- <div id="map"></div> -->
-    <!-- <input id="range" type="range" min="1" max="130"><br> -->
-    <span id="num">1</span>
-</body>
+    </gmp-map> -->
+<!-- <div id="map"></div> -->
+<!-- <input id="range" type="range" min="1" max="130"><br> -->
+<!-- <span id="num">1</span> -->
+<!-- </body>
 <script src="app.js"></script>
 
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Map Autocomplete</title>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDYtN3BNCcHFJXpQXrNMxKxIsc9-Pdd-0&callback=initAutocomplete&libraries=maps,marker,places&v=beta"></script>
+    <!-- <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDYtN3BNCcHFJXpQXrNMxKxIsc9-Pdd-0&loading=async&libraries=places&callback=initAutocomplete"></script>     -->
+</head>
+
+<body>
+    <input id="autocomplete" type="text" placeholder="Aa" style="width: 500px;">
+    <gmp-map class="" center="11.240029883135003, 125.00268827609003" zoom="16" map-id="DEMO_MAP_ID" style="width: 700px; height: 500px;">
+        <!-- <gmp-advanced-marker position="11.238277945581412, 125.00150250628963" title="Location"></gmp-advanced-marker>         -->
+        <!-- <gmp-advanced-marker id="current-location" position="11.240029883135003, 125.00268827609003" title="First location">            
+            <img id="current-location-img" class="rounded-circle border border-danger" src="inay-profile.jpg" style="width: 40px; height: 40px;" alt="Custom Marker Icon">
+        </gmp-advanced-marker> -->
+    </gmp-map>
+</body>
+<script>
+    let autoComplete;
+    function initAutocomplete() {
+        autoComplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), {
+                // types: ['establishment'],
+                // componentRestrictions: {'country': ['AU']},
+                // fields: ['address_component', 'geometry', 'place_id', 'icon', 'geometry', 'name']
+                fields: ['ALL']
+            }
+        );
+
+        autoComplete.addListener('place_changed', () => {
+            var place = autoComplete.getPlace();
+
+            if (!place.geometry) {
+                document.getElementById('autocomplete').placeholder = 'Enter a place';
+            } else {
+                console.log(place.geometry.location.lat() + ', ' + place.geometry.location.lng());
+                var gmp = document.querySelector('gmp-map')
+                gmp.setAttribute('center', place.geometry.location.lat() + ', ' + place.geometry.location.lng());
+                // document.querySelector('gmp-advanced-marker').setAttribute('position', place.geometry.location.lat() + ', ' + place.geometry.location.lng());
+                var marker = document.createElement('gmp-advanced-marker');
+                marker.setAttribute('position', place.geometry.location.lat() + ', ' + place.geometry.location.lng());
+                marker.setAttribute('title', 'Place Title');
+                gmp.appendChild(marker);
+
+                marker.addEventListener('click', () => {
+                    gmp.innerHTML = '';
+                })
+            }
+        });
+    }
+</script>
 </html>
